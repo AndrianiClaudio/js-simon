@@ -30,29 +30,20 @@
 */
    
 // ---Visualizzare in pagina 5 numeri casuali
-// funzione per generare numero casuale qualsiasi.
 function randomNumber(min,max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-// NUMERO_GENERAZIONI(5)
+
 const NUMBER_QUANTITY = 5;
 // estremi del valore generato
 const min_secret_number = 1;
 const max_secret_number = 100;
-// const max_secret_number = 5; test con meno numeri segreti
-// console.log(randomNumber(min_secret_number,max_secret_number)); // stampa TEST: GENERA #CASUALE compreso tra due valori
-// ogni numero casuale generato va salvato per poi poterlo stampare a pagina senza problemi
 const casualNumbers = [];
-// ripeto funzione per un numero pari a NUMERO_GENERAZIONI(5)
-// per stampare i numeri casuali ho bisogno di un elemento nel dom a cui aggiungere testo(container)
 const container = document.querySelector('.container');
-// container.innerHTML = casualNumbers[0]; stampa test primo numero casuale generato
 for(let i = 0;i<NUMBER_QUANTITY;i++) {
-    //genero numero casuale
     let number = randomNumber(min_secret_number,max_secret_number);
     // controllo non sia stato generato due volte lo stesso numero.
     while(casualNumbers.includes(number)) {
-        // console.log('While'); test ciclo while
         number = randomNumber(min_secret_number, max_secret_number);
     }
     //inserisco numero generato nel mio array
