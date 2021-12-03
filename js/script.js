@@ -28,27 +28,34 @@
     // salvo i numeri che sono stati individuati per poterli stampare poi
     // stampo a video #elementi ed elementi indovinati
 */
-   
-// ---Visualizzare in pagina 5 numeri casuali
+ // ---  genera un numero casuale compreso tra due estremi
 function randomNumber(min,max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-const NUMBER_QUANTITY = 5;
-// estremi del valore generato
-const min_secret_number = 1;
-const max_secret_number = 100;
-const casualNumbers = [];
-const container = document.querySelector('.container');
-for(let i = 0;i<NUMBER_QUANTITY;i++) {
-    let number = randomNumber(min_secret_number,max_secret_number);
-    // controllo non sia stato generato due volte lo stesso numero.
-    while(casualNumbers.includes(number)) {
-        number = randomNumber(min_secret_number, max_secret_number);
+// ---genera e restituisce n numeri casuali
+function generateRandomNumbers(n) {
+    const randomNumbers = []
+    // estremi del valore generato
+    const min_secret_number = 1;
+    const max_secret_number = 100;
+    for(let i = 0;i<n;i++) {
+        let number = randomNumber(min_secret_number,max_secret_number);
+        // controllo non sia stato generato due volte lo stesso numero.
+        while(randomNumbers.includes(number)) {
+            number = randomNumber(min_secret_number, max_secret_number);
+        }
+        randomNumbers.push(number);
     }
-    //inserisco numero generato nel mio array
-    casualNumbers.push(number);
-    container.innerHTML += casualNumbers[i];
+    return randomNumbers;
+}
+// ---Visualizzare in pagina 5 numeri casuali
+const NUMBER_QUANTITY = 5;
+const randomPcNum = generateRandomNumbers(NUMBER_QUANTITY);
+//stampa 
+const container = document.querySelector('.container');
+for (let i = 0; i < NUMBER_QUANTITY; i++) {
+    container.innerHTML += randomPcNum[i];
+    // aggiunta separatore numero successivo
     if(i < NUMBER_QUANTITY - 1) {
         container.innerHTML += ' - ';
     }
