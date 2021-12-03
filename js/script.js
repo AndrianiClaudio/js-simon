@@ -7,19 +7,7 @@
    quali dei numeri da indovinare sono stati individuati.
 */
 
-/**PARTE TESTUALE
-    // ---Dopo 30 secondi l’utente deve inserire, uno alla volta, i numeri che ha visto precedentemente, tramite il prompt().
-    // COSA MI SERVE:
-    // essere arrivati alla fine del tempo
-    // inserire un numero, tramite funzione prompt, per un numero di volte pari a NUMERO_GENERAZIONI(5)
-    // ---Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
-    // COSA MI SERVE:
-    // devo aver salvato le mie scelte date tramite prompt
-    // controllo se la mia scelta é presente nei numeri casuali generati
-    // salvo i numeri che sono stati individuati per poterli stampare poi
-    // stampo a video #elementi ed elementi indovinati
-*/
- // ---  genera un numero casuale compreso tra due estremi
+// ---  genera un numero casuale compreso tra due estremi
 function randomNumber(min,max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -51,11 +39,9 @@ for (let i = 0; i < NUMBER_QUANTITY; i++) {
         container.innerHTML += ' - ';
     }
 }
-
-const userNumbers = [];
-// ---parte un timer di 30 secondi
-function waitTimerForUse () {
-    container.innerHTML = 'il timer si é concluso';
+// const userInsertNumbers = () => {
+function userInsertNumbers () {
+    const userNumbers = [];
     for(let i=0;i<NUMBER_QUANTITY;i++) {
         let num = parseInt(prompt(`Inserisci numero ${i+1}/${NUMBER_QUANTITY}: `));
         // contralla se effettivamente é stato inserito un numero
@@ -75,7 +61,24 @@ function waitTimerForUse () {
         }
         userNumbers.push(num);
     }
+    return userNumbers;
+}
+
+// ---parte un timer di 30 secondi
+function waitTimerForUse () {
+    container.innerHTML = 'il timer si é concluso';
+    // console.log(userInsertNumbers);
+    const userNumbers = userInsertNumbers();
+    console.log(userNumbers);
 }
 const timer_s = 2;  // test timer
 // const timer_s = 30;
 const timer = setTimeout(waitTimerForUse, timer_s * 1000);
+/**PARTE TESTUALE
+    // ---Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
+    // COSA MI SERVE:
+    // devo aver salvato le mie scelte date tramite prompt
+    // controllo se la mia scelta é presente nei numeri casuali generati
+    // salvo i numeri che sono stati individuati per poterli stampare poi
+    // stampo a video #elementi ed elementi indovinati
+*/
