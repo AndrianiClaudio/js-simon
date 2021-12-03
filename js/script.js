@@ -32,17 +32,14 @@
 function randomNumber(min,max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-// ---genera e restituisce n numeri casuali
-function generateRandomNumbers(n) {
+// ---genera e restituisce n numeri casuali con valore compreso tra min e max
+function generateRandomNumbers(n,min,max) {
     const randomNumbers = []
-    // estremi del valore generato
-    const min_secret_number = 1;
-    const max_secret_number = 100;
     for(let i = 0;i<n;i++) {
-        let number = randomNumber(min_secret_number,max_secret_number);
+        let number = randomNumber(min,max);
         // controllo non sia stato generato due volte lo stesso numero.
         while(randomNumbers.includes(number)) {
-            number = randomNumber(min_secret_number, max_secret_number);
+            number = randomNumber(min, max);
         }
         randomNumbers.push(number);
     }
@@ -50,7 +47,10 @@ function generateRandomNumbers(n) {
 }
 // ---Visualizzare in pagina 5 numeri casuali
 const NUMBER_QUANTITY = 5;
-const randomPcNum = generateRandomNumbers(NUMBER_QUANTITY);
+// estremi del valore generato
+const min_secret_number = 1;
+const max_secret_number = 100;
+const randomPcNum = generateRandomNumbers(NUMBER_QUANTITY,min_secret_number,max_secret_number);
 //stampa 
 const container = document.querySelector('.container');
 for (let i = 0; i < NUMBER_QUANTITY; i++) {
