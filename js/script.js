@@ -6,17 +6,26 @@
    Dopo che sono stati inseriti i 5 numeri, il software dice quanti e  
    quali dei numeri da indovinare sono stati individuati.
 */
-
-// ---  genera un numero casuale compreso tra due estremi
+/**
+ * 
+ * @param {*} min valore minimo generabile
+ * @param {*} max valore massimo generabile
+ * @returns numero casuale tra min e max
+ */
 function randomNumber(min,max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-// ---genera e restituisce n numeri casuali con valore compreso tra min e max
+/**
+ * 
+ * @param {*} n numero di elementi da generarte
+ * @param {*} min valore minimo generabile
+ * @param {*} max valore massimo generabile
+ * @returns array di n elementi compresi tra min e max
+ */
 function generateRandomNumbers(n,min,max) {
     const randomNumbers = []
     for(let i = 0;i<n;i++) {
         let number = randomNumber(min,max);
-        // controllo non sia stato generato due volte lo stesso numero.
         while(randomNumbers.includes(number)) {
             number = randomNumber(min, max);
         }
@@ -24,16 +33,17 @@ function generateRandomNumbers(n,min,max) {
     }
     return randomNumbers;
 }
+/**
+ // crea e restituisce un array di 5 numeri inseriti tramite prompt
+ * contralla se effettivamente é stato inserito un numero
+ * controllo se valore numerico
+ * controllo se compreso negli estremi in cui calcolo i numeri casuali
+ * controllo che utente non inserisca due volte lo stesso numero 
+ */
 function userInsertNumbers () {
     const userNumbers = [];
     for(let i=0;i<NUMBER_QUANTITY;i++) {
         let num = parseInt(prompt(`Inserisci numero ${i+1}/${NUMBER_QUANTITY}: `));
-        // contralla se effettivamente é stato inserito un numero
-        /**
-         * controllo se valore numerico
-         * controllo se compreso negli estremi in cui calcolo i numeri casuali
-         * controllo che utente non inserisca due volte lo stesso numero 
-         */
         while(isNaN(num) || num < min_secret_number || num > max_secret_number || userNumbers.includes(num)) {
             if (isNaN(num)) {
                 num = parseInt(prompt(`Errore: inserito valore non numerico. Reinserisci numero ${i + 1}/${NUMBER_QUANTITY}: `));
@@ -47,7 +57,57 @@ function userInsertNumbers () {
     }
     return userNumbers;
 }
-// ---Visualizzare in pagina 5 numeri casuali
+//elimina numeri dopo tot.tempo preimpostato. Inizia timer per la funzione WaitTimerForUse
+function waitFirstTimer() {
+    // const timer_s = 30;
+    const timer_s = 2;
+    container.innerHTML = '<strong>Dovevi guardare prima. il timer si é concluso</strong>';
+    setTimeout(waitSecondTimer, timer_s * 1000);
+}
+//richiede numeri dopo un tot.di tempo preimpostato grazie a funzione userInsertNumbers.
+function waitSecondTimer() {
+    const userNumbers = userInsertNumbers();
+    printResult(userNumbers,randomPcNum);
+    //    console.log('numFind: ',numFind,'numFind-length: ',numFind.length);
+}
+function printResult(num,pcNum) {
+    const numFind = [];
+    for (let i = 0; i < NUMBER_QUANTITY; i++) {
+        for (let j = 0; j < NUMBER_QUANTITY; j++) {
+            if (num[i] == pcNum[j]) {
+                numFind.push(num[i]);
+            }
+        }
+    }
+    if (numFind.length == 0) {
+        container.innerHTML = '<strong>Ops! Pessima memoria o attenzione! Non ti sei ricordato nessun numero.</strong>';
+    } else {
+        if (numFind.length == NUMBER_QUANTITY) {
+            container.innerHTML = '<strong>Memoria eccellente! Ti sei ricordato tutti i numeri.</strong>';
+        } else {
+            container.innerHTML = `
+            <strong>
+                Complimenti. Hai ricordato ${numFind.length} numeri su ${NUMBER_QUANTITY}
+            </strong>
+            `
+        }
+        container.innerHTML += `
+        <br>
+        <span>
+            I numeri trovati sono:
+        </span>
+        `
+        for (let i = 0; i < numFind.length; i++) {
+            container.innerHTML += `
+            <br>
+            <span>
+                ${numFind[i]}
+            </span>
+            `
+        }
+    } 
+}
+
 const NUMBER_QUANTITY = 5;
 // estremi del valore generato
 const min_secret_number = 1;
@@ -62,60 +122,5 @@ for (let i = 0; i < NUMBER_QUANTITY; i++) {
         container.innerHTML += ' - ';
     }
 }
-const timer_s = 3;  // test timer
-// const timer_s = 30;
-const timerID = setTimeout(waitTimerForUse, timer_s * 1000);
-// console.log(timerID);
-// ---parte un timer di 30 secondi
-let check = false;
-//per quanto tempo verranno visualizzati prima di terminale
 const watchNumberTime_s = 2;
-const watchTimerID = setTimeout(() => {
-    check = true;
-    if(check) {
-        container.innerHTML = '<strong>Dovevi guardare prima. il timer si é concluso</strong>';
-        // console.log(watchTimerID);
-    }
-}, watchNumberTime_s * 1000);
-
-function waitTimerForUse () {
-    const userNumbers = userInsertNumbers();
-    // ---il software dice quanti e quali dei numeri da indovinare sono stati individuati.
-    const numFind = [];
-    // console.log(numFind.length);
-    for (let i = 0; i < NUMBER_QUANTITY; i++) {
-    //    console.log('userNumbers: ', userNumbers[i], 'randomPcNum: ',randomPcNum[i]);
-        for(let j = 0;j<NUMBER_QUANTITY;j++) {
-            if(userNumbers[i] == randomPcNum[j]) {
-                // console.log('trovato riscontro');
-                numFind.push(userNumbers[i]);
-            }
-        }
-   }
-   if(numFind.length == 0) {
-       container.innerHTML = '<strong>Ops! Pessima memoria o attenzione! Non ti sei ricordato nessun numero.</strong>';
-    } else if (numFind.length == NUMBER_QUANTITY) {
-       container.innerHTML = '<strong>Memoria eccellente! Ti sei ricordato tutti i numeri.</strong>';
-    } else {
-       container.innerHTML = `
-        <strong>
-            Complimenti. Hai ricordato ${numFind.length} numeri su ${NUMBER_QUANTITY}
-        </strong>
-        `
-    }
-    container.innerHTML += `
-    <br>
-    <span>
-        I numeri trovati sono:
-    </span>
-    `
-    for (let i = 0; i < numFind.length; i++) {
-        container.innerHTML += `
-        <br>
-        <span>
-            ${numFind[i]}
-        </span>
-        `
-    }
-//    console.log('numFind: ',numFind,'numFind-length: ',numFind.length);
-}
+setTimeout(waitFirstTimer, watchNumberTime_s * 1000);
