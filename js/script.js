@@ -24,22 +24,6 @@ function generateRandomNumbers(n,min,max) {
     }
     return randomNumbers;
 }
-// ---Visualizzare in pagina 5 numeri casuali
-const NUMBER_QUANTITY = 5;
-// estremi del valore generato
-const min_secret_number = 1;
-const max_secret_number = 100;
-const randomPcNum = generateRandomNumbers(NUMBER_QUANTITY,min_secret_number,max_secret_number);
-//stampa 
-const container = document.querySelector('.container');
-for (let i = 0; i < NUMBER_QUANTITY; i++) {
-    container.innerHTML += randomPcNum[i];
-    // aggiunta separatore numero successivo
-    if(i < NUMBER_QUANTITY - 1) {
-        container.innerHTML += ' - ';
-    }
-}
-// const userInsertNumbers = () => {
 function userInsertNumbers () {
     const userNumbers = [];
     for(let i=0;i<NUMBER_QUANTITY;i++) {
@@ -63,22 +47,49 @@ function userInsertNumbers () {
     }
     return userNumbers;
 }
-
-// ---parte un timer di 30 secondi
-function waitTimerForUse () {
-    container.innerHTML = 'il timer si é concluso';
-    // console.log(userInsertNumbers);
-    const userNumbers = userInsertNumbers();
-    console.log(userNumbers);
+// ---Visualizzare in pagina 5 numeri casuali
+const NUMBER_QUANTITY = 5;
+// estremi del valore generato
+const min_secret_number = 1;
+const max_secret_number = 100;
+const randomPcNum = generateRandomNumbers(NUMBER_QUANTITY,min_secret_number,max_secret_number);
+//stampa 
+const container = document.querySelector('.container');
+for (let i = 0; i < NUMBER_QUANTITY; i++) {
+    container.innerHTML += randomPcNum[i];
+    // aggiunta separatore numero successivo
+    if(i < NUMBER_QUANTITY - 1) {
+        container.innerHTML += ' - ';
+    }
 }
-const timer_s = 2;  // test timer
+const timer_s = 3;  // test timer
 // const timer_s = 30;
-const timer = setTimeout(waitTimerForUse, timer_s * 1000);
-/**PARTE TESTUALE
-    // ---Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
-    // COSA MI SERVE:
-    // devo aver salvato le mie scelte date tramite prompt
-    // controllo se la mia scelta é presente nei numeri casuali generati
-    // salvo i numeri che sono stati individuati per poterli stampare poi
-    // stampo a video #elementi ed elementi indovinati
-*/
+const timerID = setTimeout(waitTimerForUse, timer_s * 1000);
+// console.log(timerID);
+// ---parte un timer di 30 secondi
+let check = false;
+//per quanto tempo verranno visualizzati prima di terminale
+const watchNumberTime_s = 2;
+const watchTimerID = setTimeout(() => {
+    check = true;
+    if(check) {
+        container.innerHTML = '<strong>Dovevi guardare prima. il timer si é concluso</strong>';
+        // console.log(watchTimerID);
+    }
+}, watchNumberTime_s * 1000);
+
+function waitTimerForUse () {
+    const userNumbers = userInsertNumbers();
+    /**PARTE TESTUALE
+        // ---Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
+        // COSA MI SERVE:
+        // controllo se la mia scelta é presente nei numeri casuali generati
+        // salvo i numeri che sono stati individuati per poterli stampare poi
+        // stampo a video #elementi ed elementi indovinati
+    */
+   console.log('userNumbers-length: ', userNumbers.length, 'randomPcNum-length: ',randomPcNum.length);
+   for (let i = 0; i < NUMBER_QUANTITY; i++) {
+       console.log('userNumbers: ', userNumbers[i], 'randomPcNum: ',randomPcNum[i]);
+   }
+    // console.log(userNumbers);
+}
