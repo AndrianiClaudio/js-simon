@@ -80,16 +80,42 @@ const watchTimerID = setTimeout(() => {
 
 function waitTimerForUse () {
     const userNumbers = userInsertNumbers();
-    /**PARTE TESTUALE
-        // ---Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
-        // COSA MI SERVE:
-        // controllo se la mia scelta é presente nei numeri casuali generati
-        // salvo i numeri che sono stati individuati per poterli stampare poi
-        // stampo a video #elementi ed elementi indovinati
-    */
-   console.log('userNumbers-length: ', userNumbers.length, 'randomPcNum-length: ',randomPcNum.length);
-   for (let i = 0; i < NUMBER_QUANTITY; i++) {
-       console.log('userNumbers: ', userNumbers[i], 'randomPcNum: ',randomPcNum[i]);
+    // ---il software dice quanti e quali dei numeri da indovinare sono stati individuati.
+    const numFind = [];
+    // console.log(numFind.length);
+    for (let i = 0; i < NUMBER_QUANTITY; i++) {
+    //    console.log('userNumbers: ', userNumbers[i], 'randomPcNum: ',randomPcNum[i]);
+        for(let j = 0;j<NUMBER_QUANTITY;j++) {
+            if(userNumbers[i] == randomPcNum[j]) {
+                // console.log('trovato riscontro');
+                numFind.push(userNumbers[i]);
+            }
+        }
    }
-    // console.log(userNumbers);
+   if(numFind.length == 0) {
+       container.innerHTML = '<strong>Ops! Pessima memoria o attenzione! Non ti sei ricordato nessun numero.</strong>';
+    } else if (numFind.length == NUMBER_QUANTITY) {
+       container.innerHTML = '<strong>Memoria eccellente! Ti sei ricordato tutti i numeri.</strong>';
+    } else {
+       container.innerHTML = `
+        <strong>
+            Complimenti. Hai ricordato ${numFind.length} numeri su ${NUMBER_QUANTITY}
+        </strong>
+        `
+    }
+    container.innerHTML += `
+    <br>
+    <span>
+        I numeri trovati sono:
+    </span>
+    `
+    for (let i = 0; i < numFind.length; i++) {
+        container.innerHTML += `
+        <br>
+        <span>
+            ${numFind[i]}
+        </span>
+        `
+    }
+//    console.log('numFind: ',numFind,'numFind-length: ',numFind.length);
 }
