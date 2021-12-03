@@ -8,12 +8,6 @@
 */
 
 /**PARTE TESTUALE
-// ---Visualizzare in pagina 5 numeri casuali
-// COSA MI SERVE:
-    // NUMERO_GENERAZIONI(5)
-    // funzione per generare numero casuale
-    // ripeto funzione per un numero pari a NUMERO_GENERAZIONI(5)
-    // ogni numero casuale generato va salvato per poi poterlo stampare a pagina senza problemi
     // ---parte un timer di 30 secondi
     // COSA MI SERVE:
     // funzione asincrona, che parta dopo un tempo preimpostato(30s) e aspettare la fine
@@ -60,3 +54,14 @@ for (let i = 0; i < NUMBER_QUANTITY; i++) {
         container.innerHTML += ' - ';
     }
 }
+
+// ---parte un timer di 30 secondi
+function waitTimerForUse () {
+    console.log('il timer si é concluso');
+}
+// COSA MI SERVE:
+    // funzione asincrona, che parta dopo un tempo preimpostato(30s) e aspettare la fine
+// const timer_s = 2;  // test timer
+const timer_s = 30;
+const timer = setTimeout(waitTimerForUse, timer_s * 1000);
+console.log('post-timer. ma esco prima');
