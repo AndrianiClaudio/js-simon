@@ -57,4 +57,8 @@ for(let i = 0;i<NUMBER_QUANTITY;i++) {
     }
     //inserisco numero generato nel mio array
     casualNumbers.push(number);
+    container.innerHTML += casualNumbers[i];
+    if(i < NUMBER_QUANTITY - 1) {
+        container.innerHTML += ' - ';
+    }
 }
