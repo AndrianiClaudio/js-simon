@@ -8,9 +8,6 @@
 */
 
 /**PARTE TESTUALE
-    // ---parte un timer di 30 secondi
-    // COSA MI SERVE:
-    // funzione asincrona, che parta dopo un tempo preimpostato(30s) e aspettare la fine
     // ---Dopo 30 secondi l’utente deve inserire, uno alla volta, i numeri che ha visto precedentemente, tramite il prompt().
     // COSA MI SERVE:
     // essere arrivati alla fine del tempo
@@ -55,13 +52,30 @@ for (let i = 0; i < NUMBER_QUANTITY; i++) {
     }
 }
 
+const userNumbers = [];
 // ---parte un timer di 30 secondi
 function waitTimerForUse () {
-    console.log('il timer si é concluso');
+    container.innerHTML = 'il timer si é concluso';
+    for(let i=0;i<NUMBER_QUANTITY;i++) {
+        let num = parseInt(prompt(`Inserisci numero ${i+1}/${NUMBER_QUANTITY}: `));
+        // contralla se effettivamente é stato inserito un numero
+        /**
+         * controllo se valore numerico
+         * controllo se compreso negli estremi in cui calcolo i numeri casuali
+         * controllo che utente non inserisca due volte lo stesso numero 
+         */
+        while(isNaN(num) || num < min_secret_number || num > max_secret_number || userNumbers.includes(num)) {
+            if (isNaN(num)) {
+                num = parseInt(prompt(`Errore: inserito valore non numerico. Reinserisci numero ${i + 1}/${NUMBER_QUANTITY}: `));
+            } else if (num < min_secret_number || num > max_secret_number) {
+                num = parseInt(prompt(`Errore: inserire numero compreso tra ${min_secret_number} e ${max_secret_number}. Reinserisci numero ${i + 1}/${NUMBER_QUANTITY}: `)); 
+            } else if(userNumbers.includes(num)) {
+                num = parseInt(prompt(`Errore: numero giá inserito prima. Reinserisci numero ${i + 1}/${NUMBER_QUANTITY}: `)); 
+            }
+        }
+        userNumbers.push(num);
+    }
 }
-// COSA MI SERVE:
-    // funzione asincrona, che parta dopo un tempo preimpostato(30s) e aspettare la fine
-// const timer_s = 2;  // test timer
-const timer_s = 30;
+const timer_s = 2;  // test timer
+// const timer_s = 30;
 const timer = setTimeout(waitTimerForUse, timer_s * 1000);
-console.log('post-timer. ma esco prima');
