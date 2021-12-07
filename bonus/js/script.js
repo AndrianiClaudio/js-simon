@@ -41,26 +41,32 @@ const play = document.getElementById('play');
 play.addEventListener('click', setLevel);
 
 function setLevel() {
+    container.innerHTML = '';
+    play.removeEventListener('click',setLevel);
     const level = document.getElementById('set-level');
     game(level.value);
 }
 
+let NUMBER_QUANTITY;
 function game(difficulty) {
     let watchNumberTime_s, timer_s;
     switch (difficulty) {
         case 'easy':
-            watchNumberTime_s = 8;
+            NUMBER_QUANTITY = 5;
+            watchNumberTime_s = 6;
             timer_s = 10
             // timer_s = 1
             break;
         case 'medium': 
-            watchNumberTime_s = 5;
+            NUMBER_QUANTITY = 7;
+            watchNumberTime_s = 8;
             timer_s = 30    
             // timer_s = 3    
             break;
         case 'hard':  
-            watchNumberTime_s = 2;
+            watchNumberTime_s = 10;
             timer_s = 40;
+            NUMBER_QUANTITY = 10;
             // timer_s = 4;
             break;
         default:
@@ -68,7 +74,6 @@ function game(difficulty) {
             timer_s = 0;
             break;
     }
-    const NUMBER_QUANTITY = 5;
     const min_secret_number = 1;
     const max_secret_number = 100;
     const randomPcNum = generateRandomNumbers(NUMBER_QUANTITY, min_secret_number, max_secret_number);
