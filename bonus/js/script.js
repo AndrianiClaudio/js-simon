@@ -94,7 +94,9 @@ function game(difficulty) {
     }
     //richiede numeri dopo un tot.di tempo preimpostato grazie a funzione userInsertNumbers.
     function waitSecondTimer() {
+
         const userNumbers = userInsertNumbers();
+        play.addEventListener('click',setLevel);
         printResult(userNumbers, randomPcNum);
         //    console.log('numFind: ',numFind,'numFind-length: ',numFind.length);
     }
